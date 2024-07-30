@@ -1,0 +1,81 @@
+﻿@using System.Security.Claims;
+@using SignalRCourse.Database;
+@using SignalRCourse.Model;
+@using SignalRCourse.Repository;
+@inject IJobToDoRepository _repo;
+@{
+    string currenUserName = string.Empty;
+    var user = User;
+    List<NotificationModelDto> list = new ();
+    if (user.Identities.Any(c=>c.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Name) != null))
+    {
+        currenUserName = User!.FindFirst(c => c.Type == ClaimTypes.Name)!.Value;
+        if (list.Count <= 0)
+        {
+            list.AddRange(await _repo.GetNotificationsAsync(user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value));
+        }
+    }
+
+
+
+
+}
+
+
+<div class="row border-bottom box-shadow mb-3">
+    <div class="col-sm-6">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SignalRCourse</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Views">Views</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="JobToDo" asp-action="Index">Notifications</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="col-sm-6 d-flex flex-row-reverse align-items-center">
+        <div class="container text-end">
+            @if (currenUserName == string.Empty)
+            {
+                <div class="fs-3">Unknown</div>
+            }
+            else
+            {
+                <div class="d-flex flex-row-reverse">
+                    <form asp-action="Signout" asp-controller="Account">
+                        <button type="submit" class="btn border mx-1">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                                </svg>
+                            </div>
+                        </button>
+                    </form>
+                    <div class="fs-5">Hello @currenUserName</div>
+                    @await Html.PartialAsync("_NotificationBadge", list)
+                </div>
+
+              
+            }
+        </div>
+    </div>
+</div>
+

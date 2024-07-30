@@ -1,0 +1,28 @@
+﻿@model BasicControllerModel
+
+@{
+    ViewData["Title"] = Model?.Email == null ? "Hello unknown" : $"Hello {Model.Email}";
+}
+<div>
+    <p class="display-6">@Model?.Email</p>
+    <p class="fs-4">@Model?.Name</p>
+    <p class="fs-5">@Model?.Surname</p>
+
+    <form method="post" action="/basic/index">
+        <div class="form-floating mb-3">
+            <input asp-for="Email" class="form-control" autocomplete="on" aria-required="true" />
+            <label asp-for="Email">Email</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Name" class="form-control" autocomplete="on" aria-required="true" />
+            <label asp-for="Name">Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Surname" class="form-control" autocomplete="on" aria-required="true" />
+            <label asp-for="Surname">Surname</label>
+        </div>
+        <div>
+            <button id="hello" type="submit" class="w-100 btn btn-lg btn-primary">Create</button>
+        </div>
+    </form>
+</div>

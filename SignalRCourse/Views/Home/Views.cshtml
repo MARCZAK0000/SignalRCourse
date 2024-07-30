@@ -1,0 +1,24 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <p class="fs-5">Total Views: </p>
+        </div>
+        <div class="col-sm-6">
+            <div id="totalViewCounter" class="display-6"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <p class="fs-5">Current Users</p>
+        </div>
+        <div class="col-sm-6">
+            <p class="display-6" id="currenViewCounter"></p>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/viewscounter.js"></script>
+}
