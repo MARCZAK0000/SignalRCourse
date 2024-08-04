@@ -59,8 +59,8 @@
             else
             {
                 <div class="d-flex flex-row-reverse">
-                    <form asp-action="Signout" asp-controller="Account">
-                        <button type="submit" class="btn border mx-1">
+                    <form class="d-flex align-items-center" asp-action="Signout" asp-controller="Account">
+                        <button type="submit"  class="btn border mx-1">
                             <div class="d-flex justify-content-center align-items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
@@ -69,7 +69,8 @@
                             </div>
                         </button>
                     </form>
-                    <div class="fs-5">Hello @currenUserName</div>
+                    <div class="d-flex align-items-center fs-5">Hello @currenUserName</div>
+                    @await Html.PartialAsync("_ChatDropdown")
                     @await Html.PartialAsync("_NotificationBadge", list)
                 </div>
 

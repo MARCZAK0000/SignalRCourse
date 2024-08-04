@@ -47,4 +47,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapHub<UserHub>("/hub/userhub");
 app.MapHub<NotificationHub>("/hub/notification");
+app.MapHub<ChatBotHub>("/hub/chatbot");
 app.Run();
